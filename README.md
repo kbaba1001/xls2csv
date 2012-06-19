@@ -19,3 +19,6 @@ bin/xls2csvを書き換えることで、入力ファイルと出力先ディレ
     "a4","b4"
 
 のように、要素がダブルクォートで囲まれた形で出力されます。
+
+## LICENSE
+This library is distributed under the GPLv3.
