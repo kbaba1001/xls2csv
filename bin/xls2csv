@@ -4,5 +4,6 @@ require 'xls2csv'
 
 # core = Xls2Csv::Core.new('spec/fixture/test.xls', 'spec/fixture/output')
 # core = Xls2Csv::Core.new('not_found_file'*3 + '.xls', 'spec/fixture/output')
-core = Xls2Csv::Core.new('spec/fixture/test/Sheet1.csv', 'spec/fixture/output')
+# core = Xls2Csv::Core.new('spec/fixture/test/Sheet1.csv', 'spec/fixture/output')
+core = Xls2Csv::Core.new('spec/fixture/test.xls', 'not_found_dir'*3)
 core.convert

@@ -4,10 +4,10 @@ require 'csv'
 
 module Xls2Csv
   class Core
-    def initialize(xls, dir, logger = Logger.new(STDOUT))
+    def initialize(xls, dir, logger = nil)
       @xls = xls
       @dir = dir
-      @logger = logger
+      @logger = logger || Logger.new(STDOUT)
       Spreadsheet.client_encoding = 'UTF-8'
     end
 
@@ -18,6 +18,8 @@ module Xls2Csv
     end
 
     def read_xls(xls = @xls)
+      raise Ole::Storage::FormatError unless File::extname(xls) == '.xls'
+
       csvs = Hash.new{|hash, key| hash[key] = []}
       Spreadsheet.open(xls).worksheets.each do |sheet|
         sheet.each do |row|
@@ -26,8 +28,10 @@ module Xls2Csv
       end
       csvs
     rescue Errno::ENOENT
+      @logger.info 'Reading ERROR!!!'
       @logger.info $!.message
     rescue Ole::Storage::FormatError
+      @logger.info 'Reading ERROR!!!'
       @logger.info "#{xls} is not xls-file."
     end
 
@@ -37,6 +41,7 @@ module Xls2Csv
           f.puts "\"#{row.join('","')}\""
         end
       end
+    # rescue Errno::ENOENT
     end
 
     private

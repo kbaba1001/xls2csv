@@ -52,26 +52,24 @@ module Xls2Csv
     end
 
     describe '【異常系】' do
+      let(:logger){ mock('logger') }
+
       it '存在しないファイルを入力する' do
-        logger = mock('logger')
         core = Core.new('not_found_file'*3 + '.xls', output_path, logger)
-
+        logger.should_receive(:info).with(/Reading ERROR!!!/)
         logger.should_receive(:info).with(/No such file or directory/)
-
         core.read_xls
       end
 
       it 'xlsでないファイルを入力する' do
-        logger = mock('logger')
         core = Core.new('spec/fixture/test/Sheet1.csv', output_path, logger)
-
+        logger.should_receive(:info).with(/Reading ERROR!!!/)
         logger.should_receive(:info).with(/is not xls-file/)
-
         core.read_xls
       end
 
       it '出力先ディレクトリが存在しない' do
-        pending '(´・ω・｀)'
+        core = Core.new(input_path, 'not_found_dir'*3, logger)
       end
     end
   end
