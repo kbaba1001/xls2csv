@@ -15,8 +15,6 @@ module Xls2Csv
       read_xls.each do |filename, value|
         write_csv(filename, value)
       end
-    rescue
-      @logger.info $!.message
     end
 
     def read_xls(xls = @xls)
@@ -27,6 +25,10 @@ module Xls2Csv
         end
       end
       csvs
+    rescue Errno::ENOENT
+      @logger.info $!.message
+    rescue Ole::Storage::FormatError
+      @logger.info "#{xls} is not xls-file."
     end
 
     def write_csv(filename, value)
