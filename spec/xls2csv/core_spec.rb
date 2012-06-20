@@ -78,6 +78,15 @@ module Xls2Csv
             read = core.read_xls
             core.write_csv(read.keys.first, read.values.first)
           end
+
+          it '書き込み権限がない' do
+            core = Core.new(input_path, 'spec/fixture/output/not_writeable/', logger)
+            logger.should_receive(:info).with(/Writing ERRER!!!/)
+            logger.should_receive(:info).with(/Permission denied/)
+
+            read = core.read_xls
+            core.write_csv(read.keys.first, read.values.first)
+          end
         end
       end
     end

@@ -27,7 +27,7 @@ module Xls2Csv
         end
       end
       csvs
-    rescue Errno::ENOENT
+    rescue Errno::ENOENT, Errno::EACCES
       @logger.info 'Reading ERROR!!!'
       @logger.info $!.message
     rescue Ole::Storage::FormatError
@@ -41,7 +41,7 @@ module Xls2Csv
           f.puts "\"#{row.join('","')}\""
         end
       end
-    rescue Errno::ENOENT
+    rescue Errno::ENOENT, Errno::EACCES
       @logger.info 'Writing ERRER!!!'
       @logger.info $!.message
     end
