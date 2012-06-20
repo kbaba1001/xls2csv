@@ -14,7 +14,7 @@ module Xls2Csv
         core.class.should == Xls2Csv::Core
       end
 
-      describe '#read' do
+      describe '#read_xls' do
         let(:read){ core.read_xls }
 
         it 'Hashを返す' do
@@ -25,7 +25,7 @@ module Xls2Csv
           read.keys.should == sheets
         end
 
-        describe '#write' do
+        describe '#write_csv' do
           it '配列をcsvファイルに書き込む' do
             core.write_csv(read.keys.first, read.values.first)
             check_hello_world read.keys.first
@@ -54,22 +54,31 @@ module Xls2Csv
     describe '【異常系】' do
       let(:logger){ mock('logger') }
 
-      it '存在しないファイルを入力する' do
-        core = Core.new('not_found_file'*3 + '.xls', output_path, logger)
-        logger.should_receive(:info).with(/Reading ERROR!!!/)
-        logger.should_receive(:info).with(/No such file or directory/)
-        core.read_xls
-      end
+      describe '#read_xls' do
+        it '存在しないファイルを入力する' do
+          core = Core.new('not_found_file'*3 + '.xls', output_path, logger)
+          logger.should_receive(:info).with(/Reading ERROR!!!/)
+          logger.should_receive(:info).with(/No such file or directory/)
+          core.read_xls
+        end
 
-      it 'xlsでないファイルを入力する' do
-        core = Core.new('spec/fixture/test/Sheet1.csv', output_path, logger)
-        logger.should_receive(:info).with(/Reading ERROR!!!/)
-        logger.should_receive(:info).with(/is not xls-file/)
-        core.read_xls
-      end
+        it 'xlsでないファイルを入力する' do
+          core = Core.new('spec/fixture/test/Sheet1.csv', output_path, logger)
+          logger.should_receive(:info).with(/Reading ERROR!!!/)
+          logger.should_receive(:info).with(/is not xls-file/)
+          core.read_xls
+        end
 
-      it '出力先ディレクトリが存在しない' do
-        core = Core.new(input_path, 'not_found_dir'*3, logger)
+        describe '#write_csv' do
+          it '出力先ディレクトリが存在しない' do
+            core = Core.new(input_path, 'not_found_dir'*3, logger)
+            logger.should_receive(:info).with(/Writing ERRER!!!/)
+            logger.should_receive(:info).with(/No such file or directory/)
+
+            read = core.read_xls
+            core.write_csv(read.keys.first, read.values.first)
+          end
+        end
       end
     end
   end

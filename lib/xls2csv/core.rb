@@ -41,7 +41,9 @@ module Xls2Csv
           f.puts "\"#{row.join('","')}\""
         end
       end
-    # rescue Errno::ENOENT
+    rescue Errno::ENOENT
+      @logger.info 'Writing ERRER!!!'
+      @logger.info $!.message
     end
 
     private
