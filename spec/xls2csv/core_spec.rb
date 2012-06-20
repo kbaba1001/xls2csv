@@ -3,11 +3,11 @@ require 'spec_helper'
 
 module Xls2Csv
   describe Core do
+    let(:input_path){ 'spec/fixture/test.xls' }
+    let(:sheets){ %w[Sheet1 Sheet2 Sheet3] }
     let(:output_path){ 'spec/fixture/output' }
 
     describe '【正常系】xlsを入力する' do
-      let(:input_path){ 'spec/fixture/test.xls' }
-      let(:sheets){ %w[Sheet1 Sheet2 Sheet3] }
       let(:core){ Core.new(input_path, output_path) }
 
       it '#initialize' do
@@ -58,10 +58,19 @@ module Xls2Csv
 
         logger.should_receive(:info).with(/No such file or directory/)
 
-        core.convert
+        core.read_xls
       end
 
       it 'xlsでないファイルを入力する' do
+        logger = mock('logger')
+        core = Core.new('spec/fixture/test/Sheet1.csv', output_path, logger)
+
+        logger.should_receive(:info).with(/is not xls-file/)
+
+        core.read_xls
+      end
+
+      it '出力先ディレクトリが存在しない' do
         pending '(´・ω・｀)'
       end
     end
