@@ -14,6 +14,8 @@ module Xls2Csv
       read_xls.each do |filename, value|
         write_csv(filename, value)
       end
+    rescue
+      puts $!.message
     end
 
     def read_xls(xls = @xls)
