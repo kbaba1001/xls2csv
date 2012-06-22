@@ -53,8 +53,12 @@ module Xls2Csv
 
     describe '【異常系】' do
       it '存在しないファイルを入力する' do
-        core = Core.new('hoge'*5 + '.xls', output_path)
-        core.should be_nil
+        logger = mock('logger')
+        core = Core.new('not_found_file'*3 + '.xls', output_path, logger)
+
+        logger.should_receive(:info).with(/No such file or directory/)
+
+        core.convert
       end
 
       it 'xlsでないファイルを入力する' do
