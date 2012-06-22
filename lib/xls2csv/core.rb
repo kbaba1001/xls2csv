@@ -4,9 +4,10 @@ require 'csv'
 
 module Xls2Csv
   class Core
-    def initialize(xls, dir)
+    def initialize(xls, dir, logger = Logger.new(STDOUT))
       @xls = xls
       @dir = dir
+      @logger = logger
       Spreadsheet.client_encoding = 'UTF-8'
     end
 
@@ -15,7 +16,7 @@ module Xls2Csv
         write_csv(filename, value)
       end
     rescue
-      puts $!.message
+      @logger.info $!.message
     end
 
     def read_xls(xls = @xls)

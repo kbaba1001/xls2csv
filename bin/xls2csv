@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'xls2csv'
+
+# core = Xls2Csv::Core.new('spec/fixture/test.xls', 'spec/fixture/output')
+core = Xls2Csv::Core.new('not_found_file'*3 + '.xls', 'spec/fixture/output')
+core.convert
