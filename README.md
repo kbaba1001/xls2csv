@@ -8,12 +8,10 @@ xls2csvはコンソール上で次のコマンドを実行することで使用�
     ./bin/xls2csv <xlsファイルパス> <出力先ディレクトリパス>
 
 引数を付けずに実行した場合デフォルトパスを参照します。
-デフォルトパスはbin/xls2csvを書き換えることで変更できます。bin/xls2csvは次のようになっています。
+デフォルトパスはbin/xls2csvを書き換えることで変更できます。bin/xls2csvは次のようになっているので、必要なら書き換えてください。
 
-    input = ARGV[0] || 'spec/fixture/test.xls'
-    output = ARGV[1] || 'spec/fixture/output'
-
-ここの`spec/fixture/test.xls`や`spec/fixture/output`を変更してください。
+    DEFAULT_XLS_FILE = 'spec/fixture/test.xls'
+    DEFAULT_CSV_DIR  = 'spec/fixture/output'
 
 出力先ディレクトリには、入力されたxlsの「シート名.csv」という書式でcsvファイルが出力されます。
 出力されたcsvファイルは
@@ -27,3 +25,4 @@ xls2csvはコンソール上で次のコマンドを実行することで使用�
 
 ## LICENSE
 This library is distributed under the GPLv3.
+[show LICENSE](LICENSE.txt)
