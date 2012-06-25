@@ -11,10 +11,13 @@ module Xls2Csv
       Spreadsheet.client_encoding = 'UTF-8'
     end
 
+    def start
+      Xls2Csv::Options
+      convert
+    end
+
     def convert
-      read_xls.each do |filename, value|
-        write_csv(filename, value)
-      end
+      read_xls.each {|filename, value| write_csv(filename, value)}
     end
 
     def read_xls(xls = @xls)
@@ -22,9 +25,7 @@ module Xls2Csv
 
       csvs = Hash.new{|hash, key| hash[key] = []}
       Spreadsheet.open(xls).worksheets.each do |sheet|
-        sheet.each do |row|
-          csvs[sheet.name] << row_to_s(row)
-        end
+        sheet.each {|row| csvs[sheet.name] << row_to_s(row)}
       end
       csvs
     rescue Errno::ENOENT, Errno::EACCES
@@ -37,9 +38,7 @@ module Xls2Csv
 
     def write_csv(filename, value)
       File.open("#{@dir}/#{filename}.csv", 'w') do |f|
-        value.each do |row|
-          f.puts "\"#{row.join('","')}\""
-        end
+        value.each {|row| f.puts "\"#{row.join('","')}\""}
       end
     rescue Errno::ENOENT, Errno::EACCES
       @logger.info 'Writing ERRER!!!'

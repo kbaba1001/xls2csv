@@ -2,7 +2,10 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'xls2csv'
 
-input = ARGV[0] || 'spec/fixture/test.xls'
-output = ARGV[1] || 'spec/fixture/output'
+DEFAULT_XLS_FILE = 'spec/fixture/test.xls'
+DEFAULT_CSV_DIR  = 'spec/fixture/output'
+
+input  = ARGV[0] || DEFAULT_XLS_FILE
+output = ARGV[1] || DEFAULT_CSV_DIR
 core = Xls2Csv::Core.new(input, output)
-core.convert
+core.start
