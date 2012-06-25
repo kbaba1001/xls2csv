@@ -1,5 +1,28 @@
 xls2csv
 =====================
+xls2csv convert xls to csv. xls2csv output csv_files by
+sheet haved xls_file to dir.
+
+## Usage
+
+    xls2csv [input_xls_file] [output_csv_dir]
+    xls2csv  # use default I/O
+    xls2csv -h/--helop
+    xls2csv -v/--version
+
+## Change default I/O
+If you want to change default I/O, you will rewrite
+"xls2csv/bin/xls2csv" of source code.
+
+    DEFAULT_XLS_FILE = 'spec/fixture/test.xls'
+    DEFAULT_CSV_DIR  = 'spec/fixture/output'
+
+## Options
+
+    h,help     show usage
+    v,version  show version
+
+==========================
 xls2csvはxlsファイルをcsvに変換するRubyスクリプトです。OSに関わらず使用できます。
 
 ## 使い方
@@ -25,4 +48,3 @@ xls2csvはコンソール上で次のコマンドを実行することで使用�
 
 ## LICENSE
 This library is distributed under the GPLv3.
-[show LICENSE](LICENSE.txt)
