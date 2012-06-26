@@ -25,7 +25,7 @@ sheet haved xls_file to dir.
 Usage:
 
     xls2csv [input_xls_file] [output_csv_dir]
-    xls2csv -h/--helop
+    xls2csv -h/--help
     xls2csv -v/--version
 
 Default I/O:
