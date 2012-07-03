@@ -1,7 +1,7 @@
 xls2csv
 =====================
-xls2csv convert xls to csv. xls2csv output csv_files by
-sheet haved xls_file to dir.
+xls2csv converts xls to csv. xls2csv write one csv file for
+each sheet in a xls file.  All csv files are written to specified dir.
 
 ## Usage
 
@@ -11,8 +11,9 @@ sheet haved xls_file to dir.
     xls2csv -v/--version
 
 ## Change default I/O
-If you want to change default I/O, you will rewrite
-"xls2csv/bin/xls2csv" of source code.
+You may omit input_xls_file and/or output_csv_dir.  
+Their defaults are defined is bin/xls2csv and
+you can change it.
 
     DEFAULT_XLS_FILE = 'spec/fixture/test.xls'
     DEFAULT_CSV_DIR  = 'spec/fixture/output'
