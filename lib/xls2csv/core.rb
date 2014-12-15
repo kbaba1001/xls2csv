@@ -23,9 +23,10 @@ module Xls2Csv
     def read_xls(xls = @xls)
       raise Ole::Storage::FormatError unless File::extname(xls) == '.xls'
 
+      filename = File.basename(xls, '.xls')
       csvs = Hash.new{|hash, key| hash[key] = []}
       Spreadsheet.open(xls).worksheets.each do |sheet|
-        sheet.each {|row| csvs[sheet.name] << row_to_s(row)}
+        sheet.each {|row| csvs["#{filename}-#{sheet.name}"] << row_to_s(row)}
       end
       csvs
     rescue Errno::ENOENT, Errno::EACCES
